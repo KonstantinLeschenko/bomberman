@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-
   final color;
 
   final child;
@@ -9,8 +8,6 @@ class MyButton extends StatelessWidget {
   final function;
 
   final longPress;
-
-
 
   MyButton({this.color, this.child, this.function, this.longPress});
 
@@ -27,11 +24,12 @@ class MyButton extends StatelessWidget {
             color: color,
             height: 55,
             width: 55,
-            child: Center(child: child,),
+            child: Center(
+              child: child,
+            ),
           ),
         ),
       ),
     );
   }
-
 }

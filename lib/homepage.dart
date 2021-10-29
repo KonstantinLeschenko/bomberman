@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:bomberman/button.dart';
 import 'package:bomberman/pixel.dart';
+import 'package:bomberman/start_screen.dart';
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,6 +18,8 @@ class _HomePageState extends State<HomePage> {
   int squares = 130;
   int playerPosition = 0;
   int bombPosition = -1;
+  int bq = 82;
+
   List<int> barriers = [
     11,
     13,
@@ -132,120 +138,121 @@ class _HomePageState extends State<HomePage> {
     128
   ];
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey[700],
       body: Column(
         children: [
           Expanded(
             flex: 3,
-            child: Container(
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: squares,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 10),
-                itemBuilder: (BuildContext context, int index) {
-                  if (bombPosition == index) {
-                    return MyPixel(
-                      color: Colors.white,
-                      child: Image.asset('assets/bomb.png'),
-                    );
-                  } else if (fire.contains(index)) {
-                    return MyPixel(
-                      color: Colors.white,
-                      child: Image.asset('assets/fire.jpg'),
-                    );
-                  } else if (playerPosition == index) {
-                    return MyPixel(
-                      color: Colors.white,
-                      child: Image.asset('assets/player.png'),
-                    );
-                  } else if (barriers.contains(index)) {
-                    return MyPixel(
-                      color: Colors.grey[700],
-                    );
-                  } else if (boxes.contains(index)) {
-                    return MyPixel(
-                      color: Colors.white,
-                      child: Image.asset('assets/block.png'),
-                    );
-                  } else {
-                    return MyPixel(
-                      color: Colors.white,
-                      //child: Text(index.toString()),
-                    );
-                  }
-                },
-              ),
+            child: GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: squares,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 10),
+              itemBuilder: (BuildContext context, int index) {
+                if (bombPosition == index) {
+                  return MyPixel(
+                    color: Colors.white,
+                    child: Image.asset('assets/bomb.png'),
+                  );
+                } else if (fire.contains(index)) {
+                  return MyPixel(
+                    color: Colors.white,
+                    child: Image.asset('assets/fire.jpg'),
+                  );
+                } else if (playerPosition == index) {
+                  return MyPixel(
+                    color: Colors.white,
+                    child: Image.asset('assets/player.png'),
+                  );
+                } else if (barriers.contains(index)) {
+                  return MyPixel(
+                    color: Colors.grey[700],
+                  );
+                } else if (boxes.contains(index)) {
+                  return MyPixel(
+                    color: Colors.white,
+                    child: Image.asset('assets/block.png'),
+                  );
+                } else {
+                  return MyPixel(
+                    color: Colors.white,
+                    //child: Text(index.toString()),
+                  );
+                }
+              },
             ),
           ),
           Expanded(
-              child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(),
-                    MyButton(
-                      function: moveUp,
-                      color: Colors.grey,
-                      child: const Icon(
-                        Icons.arrow_drop_up,
-                        size: 60,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyButton(),
+                      MyButton(
+                        function: moveUp,
+                        longPress: moveUpFast,
+                        color: Colors.grey,
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 60,
+                        ),
                       ),
-                    ),
-                    MyButton()
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(
-                      function: moveLeft,
-                      longPress: moveLeftFast,
-                      color: Colors.grey,
-                      child: const Icon(
-                        Icons.arrow_left,
-                        size: 60,
+                      MyButton()
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyButton(
+                        function: moveLeft,
+                        longPress: moveLeftFast,
+                        color: Colors.grey,
+                        child: const Icon(
+                          Icons.arrow_left,
+                          size: 60,
+                        ),
                       ),
-                    ),
-                    MyButton(
-                      function: bomb,
-                      color: Colors.grey,
-                      child: Image.asset('assets/bomb.png'),
-                    ),
-                    MyButton(
-                      function: moveRight,
-                      color: Colors.grey,
-                      child: const Icon(
-                        Icons.arrow_right,
-                        size: 60,
+                      MyButton(
+                        function: bomb,
+                        color: Colors.grey,
+                        child: Image.asset('assets/bomb.png'),
                       ),
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MyButton(),
-                    MyButton(
-                      function: moveDown,
-                      color: Colors.grey,
-                      child: const Icon(
-                        Icons.arrow_drop_down,
-                        size: 60,
+                      MyButton(
+                        longPress: moveRightFast,
+                        function: moveRight,
+                        color: Colors.grey,
+                        child: const Icon(
+                          Icons.arrow_right,
+                          size: 60,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyButton(),
+                      MyButton(
+                        function: moveDown,
+                        longPress: moveDownFast,
+                        color: Colors.grey,
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 60,
+                        ),
                       ),
-                    ),
-                    MyButton()
-                  ],
-                )
-              ],
-            ),
-          ))
+                      MyButton()
+                    ],
+                  )
+                ],
+              ))
         ],
       ),
     );
@@ -254,6 +261,16 @@ class _HomePageState extends State<HomePage> {
   void moveDown() {
     setState(() {
       if (playerPosition + 10 < squares &&
+          !barriers.contains(playerPosition + 10) &&
+          !boxes.contains(playerPosition + 10)) {
+        playerPosition += 10;
+      }
+    });
+  }
+
+  void moveDownFast() {
+    setState(() {
+      while(playerPosition + 10 < squares &&
           !barriers.contains(playerPosition + 10) &&
           !boxes.contains(playerPosition + 10)) {
         playerPosition += 10;
@@ -271,6 +288,16 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void moveUpFast() {
+    setState(() {
+      while(playerPosition - 10 >= 0 &&
+          !barriers.contains(playerPosition - 10) &&
+          !boxes.contains(playerPosition - 10)) {
+        playerPosition -= 10;
+      }
+    });
+  }
+
   void moveLeft() {
     setState(() {
       if (!(playerPosition % 10 == 0) &&
@@ -281,11 +308,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void moveLeftFast() {}
+  void moveLeftFast() {
+    setState(() {
+      while (!(playerPosition % 10 == 0) &&
+          !barriers.contains(playerPosition - 1) &&
+          !boxes.contains(playerPosition - 1)) {
+        playerPosition -= 1;
+      }
+    });
+  }
 
   void moveRight() {
     setState(() {
       if (!(playerPosition % 10 == 9) &&
+          !barriers.contains(playerPosition + 1) &&
+          !boxes.contains(playerPosition + 1)) {
+        playerPosition += 1;
+      }
+    });
+  }
+
+  void moveRightFast() {
+    setState(() {
+      while (!(playerPosition % 10 == 9) &&
           !barriers.contains(playerPosition + 1) &&
           !boxes.contains(playerPosition + 1)) {
         playerPosition += 1;
@@ -323,20 +368,17 @@ class _HomePageState extends State<HomePage> {
 
           bombPosition = -1;
 
-          //clearFire;
         });
 
         clearFire();
       });
 
-      //clearFire;
     });
   }
 
   void clearFire() {
     setState(() {
       if (fire.contains(playerPosition)) {
-        print('game over');
         gameOver();
       } else {
         Timer(const Duration(milliseconds: 250), () {
@@ -344,16 +386,27 @@ class _HomePageState extends State<HomePage> {
             for (int i = 0; i < fire.length; i++) {
               if (boxes.contains(fire[i])) {
                 boxes.remove(fire[i]);
+                bq = bq-1;
               }
             }
+
             fire.clear();
+            if (bq<=0) {
+              gameOver();
+            }
           });
         });
       }
     });
   }
 
-  gameOver() {
-    print('game over');
+  void gameOver() {
+    _navigateToNextScreen(context);
   }
+
+  void _navigateToNextScreen(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StarterScreen()));
+  }
+
+
 }
